@@ -11,7 +11,7 @@ posts_comments = posts_sample["num_comments"].value_counts().sort_index()
 
 plt.figure()
 
-plot = posts_comments.plot.bar(title = 'frequency')
+plot = posts_comments.plot.bar(title = 'Number of comments the posts received')
 plot.set_xlabel('comments')
 plot.set_ylabel('amount')
 
