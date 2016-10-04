@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 
@@ -36,10 +37,10 @@ plot.set_ylabel('Frequency')
 
 # Number of comments the posts received
 
-comments = posts_sample['num_comments'].value_counts().sort_index()
+comments = posts['num_comments'].value_counts().sort_index()
 
 plt.figure(2)
-plot = comments.plot.bar(title ='Number of comments the posts received')
+plot = comments.plot.hist(title = 'Number of comments the posts received', bins=20)
 plot.set_xlabel('Comments')
 plot.set_ylabel('Frequency')
 
