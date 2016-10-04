@@ -7,8 +7,6 @@ matplotlib.style.use('ggplot')
 posts = pd.read_csv('~/Dropbox/koulu/data_mining_and_information_retrieval/HN_posts_year_to_Sep_26_2016.csv')
 posts_sample = posts.sample(n = 100)
 
-plt.figure()
-
 # NOMINAL, ORDINAL
 
 # Frequencies
@@ -27,13 +25,10 @@ title_lengths = list(map(lambda x: len(x), titles))
 
 df = pd.Series(title_lengths).value_counts().sort_index()
 
+plt.figure(1)
 plot = df.plot.bar(title ='Lengths of the titles')
 plot.set_xlabel('Length (characters)')
 plot.set_ylabel('Frequency')
-
-plt.show()
-
-plt.figure()
 
 # QUANTITATIVE
 
@@ -43,6 +38,7 @@ plt.figure()
 
 comments = posts_sample['num_comments'].value_counts().sort_index()
 
+plt.figure(2)
 plot = comments.plot.bar(title ='Number of comments the posts received')
 plot.set_xlabel('Comments')
 plot.set_ylabel('Frequency')
