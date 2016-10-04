@@ -44,5 +44,13 @@ plot = comments.plot.hist(title='Number of comments the posts received', bins=20
 plot.set_xlabel('Comments')
 plot.set_ylabel('Frequency')
 
+# Standard deviation
+
+means = comments.mean()
+errors = comments.std()
+plt.figure(3)
+fig, ax = plt.subplots()
+pd.Series(means).plot.bar(yerr=errors, ax=ax)
+
 # http://stackoverflow.com/a/25163682
 plt.show()
