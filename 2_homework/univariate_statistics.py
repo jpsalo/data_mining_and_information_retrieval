@@ -54,7 +54,7 @@ def generate_standard_deviation(data, attribute):
 
 # Mean absolute deviation
 def calculate_mean_absolute_deviation(data, attribute):
-    values = pd.Series(data[attribute]).mad()
+    print(pd.Series(data[attribute]).mad())
 
 
 # Location
