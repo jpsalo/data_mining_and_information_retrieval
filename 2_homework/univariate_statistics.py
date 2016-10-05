@@ -47,7 +47,6 @@ def generate_standard_deviation(data, attribute):
     values = data[attribute]
     means = values.mean()
     errors = values.std()
-    plt.figure(3)
     fig, ax = plt.subplots()
     pd.Series(means).plot.bar(yerr=errors, ax=ax)
 
@@ -61,9 +60,9 @@ def calculate_mean_absolute_deviation(data, attribute):
 def generate_box_plot(data, attribute):
     values_df = pd.DataFrame(data[attribute])
 
-    plt.figure(4)
+    plt.figure(3)
     values_df.plot.box(showfliers=False)
-    plt.figure(5)
+    plt.figure(4)
     values_df.plot.box()
 
 
