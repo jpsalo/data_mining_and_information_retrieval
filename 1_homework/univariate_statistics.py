@@ -18,54 +18,42 @@ posts_sample = posts.sample(n=100)
 
 # ORDINAL
 
-def generate_frequency():
-    # Lengths of the blog post titles
-    titles = posts['title']
 
-    title_lengths = list(map(lambda x: len(x), titles))
-
-    title_lengths_df = pd.Series(title_lengths).value_counts().sort_index()
+def generate_frequency(values, title, x_label):
+    values_df = pd.Series(values).value_counts().sort_index()
 
     plt.figure(1)
-    plot = title_lengths_df.plot.bar(title='Lengths of the titles')
-    plot.set_xlabel('Length (characters)')
+    plot = values_df.plot.bar(title=title)
+    plot.set_xlabel(x_label)
     plot.set_ylabel('Frequency')
-
-generate_frequency()
 
 # QUANTITATIVE
 
+
 # Distributions
-def generate_histogram():
+def generate_histogram(data, attribute, title, x_label):
     # Number of comments the posts received
-    comments = posts['num_comments']
+    values = data[attribute]
 
     plt.figure(2)
-    plot = comments.plot.hist(title='Number of comments the posts received', bins=20)
-    plot.set_xlabel('Comments')
+    plot = values.plot.hist(title=title, bins=20)
+    plot.set_xlabel(x_label)
     plot.set_ylabel('Frequency')
-
-generate_histogram()
 
 
 # Standard deviation
-def generate_standard_deviation():
-    comments = posts['num_comments']
-    means = comments.mean()
-    errors = comments.std()
+def generate_standard_deviation(data, attribute):
+    values = data[attribute]
+    means = values.mean()
+    errors = values.std()
     plt.figure(3)
     fig, ax = plt.subplots()
     pd.Series(means).plot.bar(yerr=errors, ax=ax)
 
-generate_standard_deviation()
-
 
 # Mean absolute deviation
-def calculate_mean_absolute_deviation():
-    comments = posts['num_comments']
-    pd.Series(comments).mad()
-
-calculate_mean_absolute_deviation()
+def calculate_mean_absolute_deviation(data, attribute):
+    values = pd.Series(data[attribute]).mad()
 
 
 # Location
@@ -77,6 +65,20 @@ def generate_box_plot(data, attribute):
     plt.figure(5)
     values_df.plot.box()
 
+
+def calculate_lengths(data, attribute):
+    values = data[attribute]
+    values_lengths = list(map(lambda x: len(x), values))
+    return values_lengths
+
+
+# Lengths of the blog post titles
+posts_title_lengths = calculate_lengths(posts, 'title')
+
+generate_frequency(posts_title_lengths, 'Lengths of the titles', 'Length (characters)')
+generate_histogram(posts, 'num_comments', 'Number of comments the posts received', 'Comments')
+generate_standard_deviation(posts, 'num_comments')
+calculate_mean_absolute_deviation(posts, 'num_comments')
 generate_box_plot(posts, 'num_points')
 
 # http://stackoverflow.com/a/25163682
