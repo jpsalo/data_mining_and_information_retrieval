@@ -36,7 +36,8 @@ def generate_histogram(data, attribute, title, x_label):
     values = data[attribute]
 
     plt.figure(2)
-    plot = values.plot.hist(title=title, bins=20)
+    # http://stackoverflow.com/a/21033789
+    plot = values.plot.hist(title=title, bins=20, bottom=0.1, logy=True)
     plot.set_xlabel(x_label)
     plot.set_ylabel('Frequency')
 
