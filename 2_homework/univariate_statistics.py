@@ -16,6 +16,7 @@ FIGURE_PATH = BASE_PATH + 'figures/'
 
 posts = pd.read_csv(BASE_PATH + 'HN_posts_year_to_Sep_26_2016.csv')
 blogs = pd.read_csv(BASE_PATH + 'BlogFeedback/blogData_train.csv', header=None)
+# blogs = pd.read_csv(BASE_PATH + 'BlogFeedback/blogData_test-2012.03.31.01_00.csv', header=None)
 
 # NOMINAL, ORDINAL
 
@@ -29,7 +30,7 @@ blogs = pd.read_csv(BASE_PATH + 'BlogFeedback/blogData_train.csv', header=None)
 
 
 def generate_frequency(values, title, x_label):
-    values_df = pd.Series(values).value_counts().sort_index()
+    values_df = values.value_counts().sort_index()
 
     fig = plt.figure()
     plot = values_df.plot.bar(title=title)
@@ -88,7 +89,14 @@ def generate_box_plot(data, attribute, x_label, hide_fliers=False):
 def calculate_lengths(data, attribute):
     values = data[attribute]
     values_lengths = list(map(lambda x: len(x), values))
-    return values_lengths
+    return pd.Series(values_lengths)
+
+
+# http://stackoverflow.com/a/14451264
+# http://stackoverflow.com/a/16949498
+def generate_bins(values):
+    bins = np.linspace(values.min(), values.max(), 20)
+    return pd.cut(values, bins)
 
 
 def process_plot(figure, type, name_suffix):
@@ -98,10 +106,13 @@ def process_plot(figure, type, name_suffix):
 
 # Lengths of the blog post titles
 posts_title_lengths = calculate_lengths(posts, 'title')
-
 frequency_figure = generate_frequency(posts_title_lengths, 'Lengths of the titles', 'Length (characters)')
 process_plot(frequency_figure, 'frequency', 'title_lengths')
-#
+
+blog_text_lengths = generate_bins(blogs[61])
+frequency_figure = generate_frequency(blog_text_lengths, 'Lengths of the blog posts', 'Length (characters)')
+process_plot(frequency_figure, 'frequency', 'post_lengths')
+
 histogram_figure = generate_histogram(posts, 'num_comments', 'Number of comments the posts received', 'Comments')
 process_plot(histogram_figure, 'histogram', 'comments')
 
