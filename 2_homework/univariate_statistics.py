@@ -37,14 +37,15 @@ def get_data_set_name(data_set):
 # ORDINAL
 
 
-def generate_frequency(values, data_set_name, title, x_label):
+def generate_frequency(values, data_set_name, title, x_label, x_tick_labels=None):
     title = title + '\n' + data_set_name
-    values_df = values.value_counts().sort_index()
 
     fig = plt.figure()
-    plot = values_df.plot.bar(title=title)
+    plot = values.plot.bar(title=title)
     plot.set_xlabel(x_label)
     plot.set_ylabel('Frequency')
+    if x_tick_labels is not None:
+        plt.xticks(np.arange(len(values)), x_tick_labels)
     return fig
 
 # QUANTITATIVE
@@ -103,20 +104,31 @@ def generate_box_plot(data, attribute, data_set_name, x_label, hide_fliers=False
 def calculate_lengths(data, attribute):
     values = data[attribute]
     values_lengths = list(map(lambda x: len(x), values))
-    return pd.Series(values_lengths)
+    return pd.Series(values_lengths).value_counts().sort_index()
 
 
 # http://stackoverflow.com/a/14451264
 # http://stackoverflow.com/a/16949498
 def generate_bins(values):
     bins = np.linspace(values.min(), values.max(), 20)
-    return pd.cut(values, bins)
+    return pd.cut(values, bins).value_counts().sort_index()
+
+
+def get_weekday_frequencies(values):
+    return blogs.ix[:,269:275].sum()
 
 
 def process_plot(figure, type, data_set_name, name_suffix):
     if (not DEBUG_MODE):
         plt.savefig(FIGURE_PATH + data_set_name + '_' + type + '_' + name_suffix + '.png')
 
+
+# Weekday of the date of publication of the blog post
+weekday_frequencies = get_weekday_frequencies(blogs)
+weekday_labels = ('mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun')
+frequency_figure = generate_frequency(weekday_frequencies, get_data_set_name('blogs'),
+                                      'Day of the publication of the blog posts', 'Weekday', weekday_labels)
+process_plot(frequency_figure, 'frequency', get_data_set_name('blogs'), 'weekdays')
 
 # Lengths of the blog post titles
 posts_title_lengths = calculate_lengths(posts, 'title')
