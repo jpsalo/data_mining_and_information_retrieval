@@ -4,7 +4,8 @@ import graph
 import utilities
 
 
-def kmeans_cluster_analysis(data, clusters, x_attribute, y_attribute, data_set_name, attributes):
+def kmeans_cluster_analysis(data, x_attribute, y_attribute, data_set_name, attributes):
+    clusters = 15
     data_numpy_array = data.as_matrix()
     x_attribute_name = attributes[x_attribute]
     y_attribute_name = attributes[y_attribute]
