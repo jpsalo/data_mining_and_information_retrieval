@@ -100,8 +100,24 @@ def generate_scatter_matrix(data, title):
     return plot
 
 
-def generate_cluster_scatter_plot(data, kmeans, data_set_name, title, x_attribute, y_attribute, x_label, y_label):
-    title = title + '\n' + data_set_name
+# CLUSTERING
+
+
+def generate_clustering_elbow(numbers_of_clusters, inertias, elbow, data_set_name):
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(numbers_of_clusters, inertias, 'b*-')
+    ax.plot(numbers_of_clusters[elbow], inertias[elbow], marker='o', markersize=12, markeredgewidth=2, markeredgecolor='r',
+            markerfacecolor='None')
+    plt.grid(True)
+    plt.xlabel('Number of clusters')
+    plt.ylabel('Average within-cluster sum of squares')
+    plt.title('Elbow for k-means clustering' + '\n' + data_set_name)
+    return fig
+
+
+def generate_cluster_scatter_plot(data, kmeans, data_set_name, number_of_clusters, x_attribute, y_attribute, x_label, y_label):
+    title = 'k-means cluster with k=' + number_of_clusters + '\n' + data_set_name
     centroids = kmeans.cluster_centers_
     labels = kmeans.labels_
 

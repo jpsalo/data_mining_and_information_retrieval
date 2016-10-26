@@ -34,13 +34,15 @@ def parse_time(value):
     return value_datetime.time()
 
 
-def process_plot(figure, type, data_set_name, name_suffix):
-    if (not DEBUG_MODE):
-        name_suffix = '_'.join(name_suffix)
-        plt.savefig(FIGURE_PATH + data_set_name + '_' + type + '_' + name_suffix + '.png')
-
-
 # Mean absolute deviation
 def calculate_mean_absolute_deviation(data, attribute, data_set_name, attribute_name):
     print(data_set_name + ':\n' + 'Mean absolute deviation for ' + attribute_name + ' is ' + str(
         pd.Series(data[attribute]).mad()))
+
+
+def process_plot(figure, type, data_set_name, name_suffix=None):
+    if (not DEBUG_MODE):
+        path = FIGURE_PATH + data_set_name + '_' + type
+        if name_suffix is not None:
+            path = path + '_' + '_'.join(name_suffix)
+        plt.savefig(path + '.png')
