@@ -19,7 +19,6 @@ def kmeans_cluster_analysis(data, x_attribute, y_attribute, data_set_name, attri
     kmeans = kmeans_clustering(data_numpy_array, numbers_of_clusters)
     inertias = [clustering.inertia_ for clustering in kmeans]
     elbow = find_elbow(kmeans, numbers_of_clusters, inertias, MAX_CLUSTERS)
-    print('elbow ' + str(numbers_of_clusters[elbow]))
 
     clustering_elbow = graph.generate_clustering_elbow(numbers_of_clusters, inertias, elbow, data_set_name)
     utilities.process_plot(clustering_elbow, 'k-means_elbow', data_set_name)
