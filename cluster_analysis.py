@@ -7,7 +7,7 @@ import utilities
 
 # http://sujitpal.blogspot.hu/2014/08/topic-modeling-with-gensim-over-past.html
 # http://stackoverflow.com/a/6657095/7010222
-def kmeans_cluster_analysis(data, x_attribute, y_attribute, data_set_name, attributes):
+def kmeans_cluster_analysis(data, x_attribute, y_attribute, data_set_name, attributes, target_variable=None):
     MAX_CLUSTERS = 10
 
     numbers_of_clusters = range(1, MAX_CLUSTERS + 1)
