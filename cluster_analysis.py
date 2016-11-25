@@ -1,8 +1,20 @@
-from sklearn import cluster
 import numpy as np
+from scipy.cluster.hierarchy import linkage
+from sklearn import cluster
 
 import graph
 import utilities
+
+
+def hierarchical_clustering_analysis(data, data_set_name):
+    data = data.sample(n=25000)
+    linkage_matrix = hierarchical_clustering(data)
+    dendrogram_figure = graph.generate_dendrogram(linkage_matrix, data_set_name)
+    utilities.process_plot(dendrogram_figure, 'dendrogram', data_set_name)
+
+
+def hierarchical_clustering(data):
+    return linkage(data, 'ward')
 
 
 # http://sujitpal.blogspot.hu/2014/08/topic-modeling-with-gensim-over-past.html

@@ -2,6 +2,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from scipy.cluster.hierarchy import dendrogram
 
 matplotlib.style.use('ggplot')
 
@@ -130,5 +131,20 @@ def generate_cluster_scatter_plot(data, kmeans, data_set_name, number_of_cluster
     ax.set_ylabel(y_label)
 
     ax.scatter(centroids[:, 0], centroids[:, 1], marker='x', alpha=1, s=200)
+
+    return fig
+
+
+def generate_dendrogram(linkage_matrix, data_set_name):
+    title = 'Hierarchical Clustering Dendrogram' + '\n' + data_set_name
+    # calculate full dendrogram
+    fig = plt.figure(figsize=(20, 10))
+    plt.title(title)
+    plt.xlabel('Sample index')
+    plt.ylabel('Distance')
+    dendrogram(
+        linkage_matrix,
+        leaf_rotation=90.,  # rotates the x axis labels
+    )
 
     return fig

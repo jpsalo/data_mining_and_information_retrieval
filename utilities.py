@@ -3,7 +3,16 @@ import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-from config import DEBUG_MODE, FIGURE_PATH
+import json
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+
+from apyori import dump_as_json
+
+from config import DEBUG_MODE, OUTPUT_PATH, FIGURE_PATH
 
 # Suppress SettingWithCopyWarning
 # http://stackoverflow.com/a/20627316
@@ -45,4 +54,15 @@ def process_plot(figure, type, data_set_name, name_suffix=None):
         path = FIGURE_PATH + data_set_name + '_' + type
         if name_suffix is not None:
             path = path + '_' + '_'.join(name_suffix)
-        plt.savefig(path + '.png')
+        plt.savefig(path + '.pdf')
+
+
+def save_to_json(data, name):
+    output = []
+    for RelationRecord in data:
+        o = StringIO()
+        dump_as_json(RelationRecord, o)
+        output.append(json.loads(o.getvalue()))
+
+    with open(OUTPUT_PATH + name + '.json', 'w') as outfile:
+        json.dump(output, outfile)
