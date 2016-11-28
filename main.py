@@ -21,7 +21,7 @@ cluster_analysis.kmeans_cluster_analysis(blogs, 55, 50, config.BLOGS['name'], co
 
 cluster_analysis.hierarchical_clustering_analysis(blogs, config.BLOGS['name'])
 
-clickstreams = open(config.CLICKSTREAMS['path'], 'r')
+clickstreams = config.CLICKSTREAMS['path']
 frequent_pattern_mining.apriori(clickstreams, config.CLICKSTREAMS['name'])
 
 # For presentation and debug

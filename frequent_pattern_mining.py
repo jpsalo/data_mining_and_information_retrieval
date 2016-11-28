@@ -1,10 +1,11 @@
+import csv
 import apyori
 
 import utilities
 
 
-def apriori(data, name):
-    head = [next(data) for x in range(2)]
-
-    results = list(apyori.apriori(head))
-    utilities.save_to_json(results, name)
+def apriori(data_path, name):
+    with open(data_path) as tsvfile:
+        tsvreader = csv.reader(tsvfile, delimiter='\t')
+        results = list(apyori.apriori(tsvreader))
+        utilities.save_to_json(results, name)

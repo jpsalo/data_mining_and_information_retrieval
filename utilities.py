@@ -58,6 +58,7 @@ def process_plot(figure, type, data_set_name, name_suffix=None):
 
 
 def save_to_json(data, name):
+    # http://stackoverflow.com/a/38515465/7010222
     output = []
     for RelationRecord in data:
         o = StringIO()
@@ -65,4 +66,5 @@ def save_to_json(data, name):
         output.append(json.loads(o.getvalue()))
 
     with open(OUTPUT_PATH + name + '.json', 'w') as outfile:
-        json.dump(output, outfile)
+        # http://stackoverflow.com/a/20776329/7010222
+        json.dump(output, outfile, sort_keys=True, indent=2)
