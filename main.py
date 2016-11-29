@@ -21,8 +21,14 @@ cluster_analysis.kmeans_cluster_analysis(blogs, 55, 50, config.BLOGS['name'], co
 
 cluster_analysis.hierarchical_clustering_analysis(blogs, config.BLOGS['name'])
 
-clickstreams = config.CLICKSTREAMS['path']
-frequent_pattern_mining.apriori(clickstreams, config.CLICKSTREAMS['name'])
+clickstream = config.CLICKSTREAMS['path']
+clickstream_csv = config.CLICKSTREAMS['path_csv']
+
+fraction = .2
+minimum_support = 4
+frequent_pattern_mining.frequent_itemsets_apriori(clickstream, config.CLICKSTREAMS['name'], fraction, minimum_support)
+frequent_pattern_mining.frequent_itemsets_fp_growth(clickstream_csv, config.CLICKSTREAMS['name'], fraction,
+                                                    minimum_support)
 
 # For presentation and debug
 # http://stackoverflow.com/a/25163682

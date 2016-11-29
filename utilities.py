@@ -4,13 +4,9 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 import json
+import csv
+import random
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
-
-from apyori import dump_as_json
 
 from config import DEBUG_MODE, OUTPUT_PATH, FIGURE_PATH
 
@@ -58,13 +54,31 @@ def process_plot(figure, type, data_set_name, name_suffix=None):
 
 
 def save_to_json(data, name):
-    # http://stackoverflow.com/a/38515465/7010222
-    output = []
-    for RelationRecord in data:
-        o = StringIO()
-        dump_as_json(RelationRecord, o)
-        output.append(json.loads(o.getvalue()))
-
     with open(OUTPUT_PATH + name + '.json', 'w') as outfile:
         # http://stackoverflow.com/a/20776329/7010222
-        json.dump(output, outfile, sort_keys=True, indent=2)
+        json.dump(data, outfile, sort_keys=True, indent=2)
+
+
+def get_sample_transactions(data_path, fraction, tsv=False):
+
+    with open(data_path) as data_file:
+
+        if tsv:
+            data_reader = csv.reader(data_file, delimiter='\t')
+        else:
+            data_reader = csv.reader(data_file)
+
+        rows = sum(1 for row in data_file)
+        sample_size = round(rows * fraction)
+        skip = sorted(random.sample(range(rows), rows - sample_size))
+
+        data_file.seek(0)
+        transactions = []
+        for index, row in enumerate(data_reader):
+            if index not in skip:
+                transaction = []
+                for item in row:
+                    transaction.append(item)
+                transactions.append(transaction)
+
+        return transactions

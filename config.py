@@ -18,7 +18,8 @@ POSTS = {
     'path': BASE_PATH + 'HN_posts_year_to_Sep_26_2016.csv'
 }
 
-CLICKSTREAMS = {
-        'name': 'clickstreams',
-        'path': BASE_PATH + 'kosarak10k_tab_delimited.txt'
+CLICKSTREAM = {
+        'name': 'clickstream',
+        'path': BASE_PATH + 'clickstream/kosarak10k_tab_delimited.txt',
+        'path_csv': BASE_PATH + 'clickstream/kosarak10k.csv'
 }
