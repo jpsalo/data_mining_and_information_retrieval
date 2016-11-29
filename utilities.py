@@ -78,7 +78,9 @@ def get_sample_transactions(data_path, fraction, tsv=False):
             if index not in skip:
                 transaction = []
                 for item in row:
-                    transaction.append(item)
+                    if item not in transaction:
+                        # Only unique values
+                        transaction.append(item)
                 transactions.append(transaction)
 
         return transactions
