@@ -23,7 +23,8 @@ def frequent_itemsets_apriori(data_path, name, fraction, minimum_support):
         apriori.dump_as_json(RelationRecord, o)
         output.append(json.loads(o.getvalue()))
 
-    utilities.save_to_json(output, name + '_apriori')
+    utilities.save_to_json(output, name + '_apriori_' +
+                           str(int(minimum_support * 10)))
 
 
 def frequent_itemsets_fp_growth(data_path, name, fraction, minimum_support):
@@ -42,4 +43,4 @@ def frequent_itemsets_fp_growth(data_path, name, fraction, minimum_support):
             "support": support
             })
 
-    utilities.save_to_json(output,  name + '_fp_growth')
+    utilities.save_to_json(output,  name + '_fp_growth_' + str(minimum_support))
