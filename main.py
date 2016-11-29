@@ -8,18 +8,18 @@ import frequent_pattern_mining
 import config
 
 # Read the files
-# blogs = pd.read_csv(config.BLOGS['path'], header=None)
-# posts = pd.read_csv(config.POSTS['path'])
-# 
-# univariate_analysis.analyze_blogs(blogs)
-# univariate_analysis.analyze_posts(posts)
-# 
-# bivariate_analysis.analyze_blogs(blogs)
-# bivariate_analysis.analyze_posts(posts)
-# 
-# cluster_analysis.kmeans_cluster_analysis(blogs, 55, 50, config.BLOGS['name'], config.BLOGS['attributes'])
-# 
-# cluster_analysis.hierarchical_clustering_analysis(blogs, config.BLOGS['name'])
+blogs = pd.read_csv(config.BLOGS['path'], header=None)
+posts = pd.read_csv(config.POSTS['path'])
+
+univariate_analysis.analyze_blogs(blogs)
+univariate_analysis.analyze_posts(posts)
+
+bivariate_analysis.analyze_blogs(blogs)
+bivariate_analysis.analyze_posts(posts)
+
+cluster_analysis.kmeans_cluster_analysis(blogs, 55, 50, config.BLOGS['name'], config.BLOGS['attributes'])
+
+cluster_analysis.hierarchical_clustering_analysis(blogs, config.BLOGS['name'])
 
 clickstream = config.CLICKSTREAM['path']
 clickstream_csv = config.CLICKSTREAM['path_csv']
